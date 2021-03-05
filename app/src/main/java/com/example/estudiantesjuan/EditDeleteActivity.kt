@@ -33,7 +33,7 @@ class EditDeleteActivity : AppCompatActivity() {
         listLoad()
     }
     private fun listLoad(){
-        val adapter = ArrayAdapter<String>(this@EditDeleteActivity, R.layout.simple_list_item_1,listStudent.getStringArray())
+        val adapter = ArrayAdapter<String>(this@EditDeleteActivity, R.layout.simple_list_item_1,listStudent.getStringArrayToEditAndDelete())
         binding.ltvStudents.adapter = adapter
     }
     private fun miDialogo(index:Int): AlertDialog {

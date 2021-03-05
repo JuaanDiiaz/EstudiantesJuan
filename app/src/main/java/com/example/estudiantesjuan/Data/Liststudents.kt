@@ -64,6 +64,13 @@ class Liststudents {
         }
         return answerList.toTypedArray()
     }
+    fun getStringArrayToEditAndDelete():Array<String>{
+        val answerList= arrayListOf<String>()
+        for((index,item) in listStudents.withIndex()){
+            answerList.add("${item.name}  ${item.lastName} - ${if(item.gender==1)"Masculino" else if(item.gender==2) "Femenino" else "género no seleccionado"} - ${if(item.financialAssistance)"con beca" else "Sin beca"}")
+        }
+        return answerList.toTypedArray()
+    }
     fun getEntityStudent(): Array<EntityStudent>{
         return listStudents.toTypedArray()
     }
