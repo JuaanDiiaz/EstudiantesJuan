@@ -24,7 +24,6 @@ class EditDeleteActivity : AppCompatActivity() {
 
         binding.ltvStudents.setOnItemClickListener { parent, view, position, id ->
             val selectedItem = parent.getItemAtPosition(position)
-            Toast.makeText(this@EditDeleteActivity,"$position $id $selectedItem", Toast.LENGTH_SHORT).show()
             miDialogo(position).show()
         }
     }
@@ -43,18 +42,19 @@ class EditDeleteActivity : AppCompatActivity() {
         miAlerta.setTitle("Mensaje del sistema")
         miAlerta.setMessage("¿Que acción desea realizar con el estudiante?")
         miAlerta.setPositiveButton("Editar"){_,_ ->
-            Toast.makeText(this@EditDeleteActivity,"Editar alumno",Toast.LENGTH_SHORT).show()
             val intent = Intent(this@EditDeleteActivity,EditStudentActivity::class.java).apply {
                 putExtra(Constans.ID,index)
             }
             startActivity(intent)
         }
         miAlerta.setNegativeButton("Eliminar"){_,_ ->
-            Toast.makeText(this@EditDeleteActivity,"Eliminar alumno",Toast.LENGTH_SHORT).show()
             val student = listStudent.getStudent(index)
             if(listStudent.delete(student.name)){
                 Toast.makeText(this@EditDeleteActivity,"Alumno eliminado exitosamente",Toast.LENGTH_SHORT).show()
                 listLoad()
+            }
+            else{
+                Toast.makeText(this@EditDeleteActivity,"Error al intentar eliminar al alumno",Toast.LENGTH_SHORT).show()
             }
 
         }

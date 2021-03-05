@@ -27,14 +27,7 @@ class DetailActivity : AppCompatActivity() {
             binding.txvDegree.text = "${Student.degree}"
             binding.txvFinancialAssistance.text = "${if(Student.financialAssistance)"con beca" else "Sin beca"}"
             binding.txvHobbies.text = "Pasatiempos:  ${if(Student.reading) "Leer" else ""} ${if(Student.travel) "Viajar" else ""} ${if(Student.sport) "Deportes" else ""}"
-            binding.btnDelete.setOnClickListener {
-                if(listStudets.delete(Student.name)){
-                    Toast.makeText(this@DetailActivity,"Estudiante eliminado",Toast.LENGTH_SHORT).show()
-                    finish()
-                }else{
-                    Toast.makeText(this@DetailActivity,"Error al eliminar",Toast.LENGTH_SHORT).show()
-                }
-            }
+
         }else{
             Toast.makeText(this@DetailActivity,"Error",Toast.LENGTH_SHORT).show()
             finish()

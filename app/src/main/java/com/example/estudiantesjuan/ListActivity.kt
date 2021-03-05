@@ -25,7 +25,6 @@ class ListActivity : AppCompatActivity() {
 
         binding.ltvStudents.setOnItemClickListener { parent, view, position, id ->
             val selectedItem = parent.getItemAtPosition(position)
-            Toast.makeText(this@ListActivity,"$position $id $selectedItem",Toast.LENGTH_SHORT).show()
             val intent = Intent(this@ListActivity,DetailActivity::class.java).apply {
                 putExtra(Constans.ID,position)
             }
