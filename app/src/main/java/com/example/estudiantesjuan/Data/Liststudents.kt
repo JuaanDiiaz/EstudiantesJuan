@@ -38,14 +38,11 @@ class Liststudents {
         }
         return answer
     }
-    fun edit(entityStudent: EntityStudent):Boolean{
+    fun edit(index:Int, entityStudent: EntityStudent):Boolean{
         var answer = false
-        for((index,item) in listStudents.withIndex()){
-            if(item.name== entityStudent.name){
-                listStudents[index] = entityStudent
-                answer = true
-                break
-            }
+        if(index< listStudents.size && index>=0) {
+            answer = true
+            listStudents[index] = entityStudent
         }
         return answer
     }

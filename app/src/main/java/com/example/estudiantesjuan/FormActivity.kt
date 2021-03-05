@@ -27,7 +27,7 @@ class FormActivity : AppCompatActivity() {
         supportActionBar?.setTitle(R.string.txt_home)
 
         binding.btnOk.setOnClickListener {
-            if(binding.adtName.text.isNotEmpty() &&  binding.adtLastName.text.isNotEmpty()){
+            if(isCorrect()){
                 val student = EntityStudent()
                 student.name=binding.adtName.text.toString()
                 student.lastName = binding.adtLastName.text.toString()
@@ -48,8 +48,6 @@ class FormActivity : AppCompatActivity() {
                 }else{
                     Snackbar.make(it,"Estudiante existente, no se guardó nada",Snackbar.LENGTH_SHORT).show()
                 }
-            }else{
-                Snackbar.make(it,"Ingresar nombre y apellidos",Snackbar.LENGTH_SHORT).show()
             }
         }
         /*
@@ -69,6 +67,35 @@ class FormActivity : AppCompatActivity() {
             Toast.makeText(this@FormActivity,"Evento setOnCheckedChangeListener $cheked",Toast.LENGTH_SHORT).show()
         }*/
 
+    }
+    private fun isCorrect():Boolean{
+        var isAllCorrect = true
+        var message= "Falta: "
+        if(binding.adtName.text.isEmpty()){
+            isAllCorrect=false
+            message += "*Nombre "
+        }
+        if(binding.adtLastName.text.isEmpty()){
+            isAllCorrect=false
+            message += "*Apellidos "
+        }
+        if(binding.spnGender.selectedItemPosition==0){
+            isAllCorrect=false
+            message += "*Genero "
+        }
+        when (binding.rgdDegree.checkedRadioButtonId){
+            binding.rdbUnfinishedStudies.id-> message += ""
+            binding.rdbUniversityIntern.id-> message += ""
+            binding.rdbFinishedStudies.id-> message += ""
+            else-> {
+                isAllCorrect=false
+                message += "*Grado de estudios "
+            }
+        }
+        if(!isAllCorrect){
+            Toast.makeText(this@FormActivity,message,Toast.LENGTH_SHORT).show()
+        }
+        return isAllCorrect
     }
     private fun clear(){
         binding.adtName.text = null

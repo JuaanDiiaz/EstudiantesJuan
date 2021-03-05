@@ -20,7 +20,7 @@ class EditStudentActivity : AppCompatActivity() {
         val id:Int = intent.getIntExtra(Constans.ID,-1)
         if(id!=-1){
             val Student  = listStudets.getStudent(id)
-            binding.txvStudentName.text = "${Student.name}"
+            binding.edtName.setText(Student.name)
             binding.edtLastName.setText(Student.lastName)
             if(Student.degree == "Trunco"){
                 binding.rdbUnfinishedStudies.isChecked = true
@@ -42,9 +42,9 @@ class EditStudentActivity : AppCompatActivity() {
             finish()
         }
         binding.btnEdit.setOnClickListener {
-            if(binding.edtLastName.text.isNotEmpty()){
+            if(isCorrect()){
                 val student = EntityStudent()
-                student.name = binding.txvStudentName.text.toString()
+                student.name = binding.edtName.text.toString()
                 student.lastName = binding.edtLastName.text.toString()
                 student.gender =  binding.spnGender.selectedItemPosition
                 when (binding.rgdDegree.checkedRadioButtonId){
@@ -56,7 +56,7 @@ class EditStudentActivity : AppCompatActivity() {
                 student.reading = binding.ckbRead.isChecked
                 student.travel = binding.ckbTravel.isChecked
                 student.financialAssistance = binding.swtFinancialAssistance.isChecked
-                val request = listStudets.edit(student)
+                val request = listStudets.edit(id,student)
                 if(request){
                     Toast.makeText(this@EditStudentActivity,"Alumno editado correctamente", Toast.LENGTH_SHORT).show()
                     finish()
@@ -66,5 +66,34 @@ class EditStudentActivity : AppCompatActivity() {
             }
 
         }
+    }
+    private fun isCorrect():Boolean{
+        var isAllCorrect = true
+        var message= "Falta: "
+        if(binding.edtName.text.isEmpty()){
+            isAllCorrect=false
+            message += "*Nombre "
+        }
+        if(binding.edtLastName.text.isEmpty()){
+            isAllCorrect=false
+            message += "*Apellidos "
+        }
+        if(binding.spnGender.selectedItemPosition==0){
+            isAllCorrect=false
+            message += "*Genero "
+        }
+        when (binding.rgdDegree.checkedRadioButtonId){
+            binding.rdbUnfinishedStudies.id-> message += ""
+            binding.rdbUniversityIntern.id-> message += ""
+            binding.rdbFinishedStudies.id-> message += ""
+            else-> {
+                isAllCorrect=false
+                message += "*Grado de estudios "
+            }
+        }
+        if(!isAllCorrect){
+            Toast.makeText(this@EditStudentActivity,message,Toast.LENGTH_SHORT).show()
+        }
+        return isAllCorrect
     }
 }
