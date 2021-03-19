@@ -2,6 +2,7 @@ package com.example.estudiantesjuan
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,12 +15,13 @@ import com.example.estudiantesjuan.Adapters.StudentAdapter
 import com.example.estudiantesjuan.Data.Liststudents
 import com.example.estudiantesjuan.Entity.EntityStudent
 import com.example.estudiantesjuan.Tools.Constans
+import com.example.estudiantesjuan.Tools.PermissionAplication
 import com.example.estudiantesjuan.databinding.ActivityDetailBinding
 import com.example.estudiantesjuan.databinding.ActivityFormBinding
 import com.google.android.material.snackbar.Snackbar
 
 class FormActivity : AppCompatActivity() {
-
+    private val permissions = PermissionAplication(this@FormActivity)
     private lateinit var binding: ActivityFormBinding
     private var listStudents = Liststudents()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +30,9 @@ class FormActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.setTitle(R.string.txt_home)
 
+        if(!permissions.hasPermissions(Constans.LIST_PERMISSIONS)){
+            permissions.acceptPermission(Constans.LIST_PERMISSIONS,1)
+        }
         binding.btnOk.setOnClickListener {
             if(isCorrect()){
                 val student = EntityStudent()
@@ -78,6 +83,23 @@ class FormActivity : AppCompatActivity() {
             Toast.makeText(this@FormActivity,"Evento setOnCheckedChangeListener $cheked",Toast.LENGTH_SHORT).show()
         }*/
 
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode){
+            1->{
+                for(p in permissions){
+                    Log.d(Constans.LOG_TAG,p)
+                }
+                for(r in grantResults){
+                    if(r!=PackageManager.PERMISSION_GRANTED){
+                        Toast.makeText(this@FormActivity,"Permisos obligatorios",Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                }
+            }
+        }
     }
     private fun isCorrect():Boolean{
         var isAllCorrect = true
