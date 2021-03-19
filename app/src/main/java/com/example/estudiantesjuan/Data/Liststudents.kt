@@ -71,8 +71,11 @@ class Liststudents {
         }
         return answerList.toTypedArray()
     }
-    fun getEntityStudent(): Array<EntityStudent>{
+    fun getEntityStudentArray(): Array<EntityStudent>{
         return listStudents.toTypedArray()
+    }
+    fun getListStudentArray(): ArrayList<EntityStudent>{
+        return listStudents
     }
     fun getStudent(index:Int):EntityStudent{
         return listStudents[index]

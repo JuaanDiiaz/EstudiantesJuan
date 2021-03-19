@@ -1,5 +1,6 @@
 package com.example.estudiantesjuan
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
+import com.example.estudiantesjuan.Adapters.StudentAdapter
 import com.example.estudiantesjuan.Data.Liststudents
 import com.example.estudiantesjuan.Entity.EntityStudent
 import com.example.estudiantesjuan.Tools.Constans
@@ -49,6 +51,15 @@ class FormActivity : AppCompatActivity() {
                     Snackbar.make(it,"Estudiante existente, no se guardó nada",Snackbar.LENGTH_SHORT).show()
                 }
             }
+        }
+        binding.editTextTextDate.setOnClickListener {
+            var year=2021
+            var month=0
+            var day=16
+            var dpd = DatePickerDialog(this@FormActivity,DatePickerDialog.OnDateSetListener { view, y, m, d ->
+
+            },year,month,day)
+            dpd.show()
         }
         /*
         binding.spnGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -114,6 +125,7 @@ class FormActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.itmList->{
@@ -122,6 +134,10 @@ class FormActivity : AppCompatActivity() {
             }
             R.id.itmForm->{
                 val intent = Intent(this@FormActivity,EditDeleteActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.itmrecyclerView->{
+                val intent = Intent(this@FormActivity,RecyclerActivity::class.java)
                 startActivity(intent)
             }
             R.id.itmExit->{
