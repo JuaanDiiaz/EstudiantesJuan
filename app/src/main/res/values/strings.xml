@@ -27,4 +27,5 @@
     <string name="txt_recycler">Recycler View</string>
     <string name="txt_recycler_view">Ver recycler view</string>
     <string name="hint_date">Click para escoger fecha</string>
+    <string name="hint_time">Click para elegir hora</string>
 </resources>

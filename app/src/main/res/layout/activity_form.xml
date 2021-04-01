@@ -154,14 +154,14 @@
             android:id="@+id/btnOk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:text="@string/txt_ok"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/swtFinancialAssistance" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextTime" />
 
         <EditText
-            android:id="@+id/editTextTextDate"
+            android:id="@+id/editTextDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -173,6 +173,20 @@
             android:hint="@string/hint_date"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ckbRead" />
+
+        <EditText
+            android:id="@+id/editTextTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="40dp"
+            android:clickable="true"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="@string/hint_time"
+            android:inputType="time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

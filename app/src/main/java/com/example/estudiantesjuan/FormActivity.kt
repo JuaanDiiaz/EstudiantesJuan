@@ -1,6 +1,7 @@
 package com.example.estudiantesjuan
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
@@ -13,12 +14,16 @@ import android.widget.AdapterView
 import android.widget.Toast
 import com.example.estudiantesjuan.Adapters.StudentAdapter
 import com.example.estudiantesjuan.Data.Liststudents
+import com.example.estudiantesjuan.Data.StudentDb
 import com.example.estudiantesjuan.Entity.EntityStudent
 import com.example.estudiantesjuan.Tools.Constans
 import com.example.estudiantesjuan.Tools.PermissionAplication
 import com.example.estudiantesjuan.databinding.ActivityDetailBinding
 import com.example.estudiantesjuan.databinding.ActivityFormBinding
 import com.google.android.material.snackbar.Snackbar
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class FormActivity : AppCompatActivity() {
     private val permissions = PermissionAplication(this@FormActivity)
@@ -57,14 +62,24 @@ class FormActivity : AppCompatActivity() {
                 }
             }
         }
-        binding.editTextTextDate.setOnClickListener {
-            var year=2021
-            var month=0
-            var day=16
-            var dpd = DatePickerDialog(this@FormActivity,DatePickerDialog.OnDateSetListener { view, y, m, d ->
-
+        binding.editTextDate.setOnClickListener {
+            val myCalendar=Calendar.getInstance()
+            val year= myCalendar.get(Calendar.YEAR)
+            val month= myCalendar.get(Calendar.MONTH)
+            val day= myCalendar.get(Calendar.DAY_OF_MONTH)
+            val dpd = DatePickerDialog(this@FormActivity,DatePickerDialog.OnDateSetListener { view, y, m, d ->
+                binding.editTextDate.setText("${twoDigits(d)} / ${twoDigits(m+1)} / $y")
             },year,month,day)
             dpd.show()
+        }
+        binding.editTextTime.setOnClickListener {
+            val myCalendar=Calendar.getInstance()
+            val h = myCalendar.get(Calendar.HOUR_OF_DAY)
+            val m = myCalendar.get(Calendar.MINUTE)
+            val tpd = TimePickerDialog(this@FormActivity, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                binding.editTextTime.setText("${twoDigits(hourOfDay)}:${twoDigits(minute)}")
+            },h,m,true)
+            tpd.show()
         }
         /*
         binding.spnGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -82,6 +97,11 @@ class FormActivity : AppCompatActivity() {
             val cheked = if(isChecked) "On" else "Off"
             Toast.makeText(this@FormActivity,"Evento setOnCheckedChangeListener $cheked",Toast.LENGTH_SHORT).show()
         }*/
+
+
+        val x=StudentDb(this@FormActivity)
+
+        x.search("n")
 
     }
 
@@ -167,5 +187,8 @@ class FormActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+    fun twoDigits(number:Int):String{
+        return if(number<=9)"0$number" else number.toString()
     }
 }
